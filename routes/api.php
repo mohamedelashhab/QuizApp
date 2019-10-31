@@ -32,3 +32,13 @@ Route::group([
     Route::post('me', 'AuthController@me');
 
 });
+
+Route::group([
+
+    'middleware' => 'role:teacher',
+
+], function ($router) {
+
+ 
+
+});
