@@ -25,7 +25,7 @@ class AuthController extends Controller
         ]);
 
         if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
+            return response()->json($validator->errors(), 400);
         }
 
         $user = User::create([
@@ -35,9 +35,11 @@ class AuthController extends Controller
             'role_id' => $request->get('role_id'),
         ]);
 
-        $token = JWTAuth::fromUser($user);
+        return $this->login($request);
 
-        return response()->json(compact('user','token'),201);
+        // $token = JWTAuth::fromUser($user);
+
+        // return response()->json(compact('user','token'),201);
     }
     /**
      * Create a new AuthController instance.
@@ -109,7 +111,8 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'expires_in' => auth()->factory()->getTTL() * 60,
+            'user' => auth()->user(),
         ]);
     }
 }
