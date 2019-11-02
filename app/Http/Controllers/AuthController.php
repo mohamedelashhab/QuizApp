@@ -12,6 +12,16 @@ use JWTAuth;
 class AuthController extends Controller
 {
 
+    /**
+     * Create a new AuthController instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+    }
+
 
 
     public function register(Request $request)
@@ -40,15 +50,6 @@ class AuthController extends Controller
         // $token = JWTAuth::fromUser($user);
 
         // return response()->json(compact('user','token'),201);
-    }
-    /**
-     * Create a new AuthController instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
     /**

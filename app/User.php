@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\models\Quiz;
 use App\models\Role;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -63,5 +64,10 @@ class User extends Authenticatable implements JWTSubject
     public function hasRole($role)
     {
         return auth()->user()->role()->name == $role;
+    }
+
+    public function quizzes()
+    {
+        return $this->hasMany(Quiz::class, 'teacher_id');
     }
 }

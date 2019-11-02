@@ -34,11 +34,13 @@ Route::group([
 });
 
 Route::group([
-
-    'middleware' => 'role:teacher',
+// ,'role:teacher'
+    'middleware' => ['api'],
 
 ], function ($router) {
 
- 
+ Route::post('{id}/quiz/create', 'QuizController@store');
+ Route::post('questations/{q_id}/create', 'QuestationController@store');
+ Route::post('answers/{q_id}/create', 'AnswerController@store');
 
 });
