@@ -6,6 +6,7 @@ use App\models\Questation;
 use App\models\Quiz;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as IlluminateRequest;
+use Illuminate\Support\Facades\Validator;
 
 class QuestationController extends Controller
 {
@@ -33,14 +34,13 @@ class QuestationController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'body' => 'required|string|max:255',
-            'quiz_id' => 'required'
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
-        $questation->update([
+        $questation->update(
             $request->all()
-        ]);
+        );
         return response()->json($questation, 200);
     }
 }

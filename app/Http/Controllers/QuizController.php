@@ -44,7 +44,6 @@ class QuizController extends Controller
 
     public function edit(Request $request, Quiz $quiz)
     {
-        return $request;
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'num' => 'required'
@@ -52,9 +51,9 @@ class QuizController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
-        $quiz->update([
+        $quiz->update(
             $request->all()
-        ]);
+        );
         return response()->json($quiz, 200);
     }
 }

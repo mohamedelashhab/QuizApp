@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\models\Answer;
 use App\models\Questation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
 use Illuminate\Support\Facades\Request as IlluminateRequest;
 
 class AnswerController extends Controller
@@ -31,14 +33,13 @@ class AnswerController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'body' => 'required|string|max:255',
-            'questation_id' => 'required'
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
-        $answer->update([
+        $answer->update(
             $request->all()
-        ]);
+        );
         return response()->json($answer, 200);
     }
 
