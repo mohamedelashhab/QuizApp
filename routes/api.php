@@ -41,6 +41,7 @@ Route::group([
 
  Route::post('{id}/quiz/create', 'QuizController@store');
  Route::put('quiz/{quiz}/edit', 'QuizController@edit');
+ Route::put('quiz/{quiz}/publish', 'QuizController@publish');
  Route::get('quiz/{id}/show', 'QuizController@show');
  Route::post('questations/{q_id}/create', 'QuestationController@store');
  Route::put('questations/{questation}/edit', 'QuestationController@edit');

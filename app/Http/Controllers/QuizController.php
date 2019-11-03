@@ -56,4 +56,18 @@ class QuizController extends Controller
         );
         return response()->json($quiz, 200);
     }
+
+    public function publish(Request $request, Quiz $quiz)
+    {
+        $validator = Validator::make($request->all(), [
+            'published' => 'required|boolean',
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+        $quiz->published = 1;
+        $quiz->save();
+        return response()->json($quiz, 200);
+
+    }
 }
