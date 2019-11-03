@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\models\Quiz;
 use App\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class QuizController extends Controller
 {
@@ -18,6 +18,7 @@ class QuizController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
+            'num' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -27,10 +28,33 @@ class QuizController extends Controller
         // return auth()->user();
         $u = User::find($id)->first();
 
-        $u->quizzes()->create([
+        $quize = $u->quizzes()->create([
             'name' => $request->input('name'),
+            'num' => $request->input('num'),
         ]);
 
-        return response()->json($request->all(), 200);
+        return response()->json($quize, 200);
+    }
+
+    public function show($id)
+    {
+        $res = Quiz::where('id', '=', $id)->with(['questations.answers'])->first();
+        return response()->json($res, 200);
+    }
+
+    public function edit(Request $request, Quiz $quiz)
+    {
+        return $request;
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'num' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+        $quiz->update([
+            $request->all()
+        ]);
+        return response()->json($quiz, 200);
     }
 }

@@ -40,7 +40,11 @@ Route::group([
 ], function ($router) {
 
  Route::post('{id}/quiz/create', 'QuizController@store');
+ Route::put('quiz/{quiz}/edit', 'QuizController@edit');
+ Route::get('quiz/{id}/show', 'QuizController@show');
  Route::post('questations/{q_id}/create', 'QuestationController@store');
+ Route::put('questations/{questation}/edit', 'QuestationController@edit');
  Route::post('answers/{q_id}/create', 'AnswerController@store');
+ Route::put('answers/{answer}/edit', 'AnswerController@edit');
 
 });
