@@ -43,6 +43,7 @@ Route::group([
  Route::put('quiz/{quiz}/edit', 'QuizController@edit');
  Route::put('quiz/{quiz}/publish', 'QuizController@publish');
  Route::get('quiz/{id}/show', 'QuizController@show');
+ Route::get('quizzes/list', 'QuizController@list');
  Route::post('questations/{q_id}/create', 'QuestationController@store');
  Route::put('questations/{questation}/edit', 'QuestationController@edit');
  Route::post('answers/{q_id}/create', 'AnswerController@store');

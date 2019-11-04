@@ -70,4 +70,18 @@ class QuizController extends Controller
         return response()->json($quiz, 200);
 
     }
+
+    public function list(Request $request)
+    {
+        if($request->has('published')){
+            $quizzes = Quiz::where('published', '=', $request->input('published'))->get();
+            return response()->json($quizzes, 200);
+        }
+        else{
+            $quizzes = Quiz::all();
+            return response()->json($quizzes, 200);
+        }
+        
+
+    }
 }
