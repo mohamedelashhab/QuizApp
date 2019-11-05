@@ -39,7 +39,7 @@ Route::group([
 
 ], function ($router) {
 
- Route::post('{id}/quiz/create', 'QuizController@store');
+ Route::post('{user}/quiz/create', 'QuizController@store');
  Route::put('quiz/{quiz}/edit', 'QuizController@edit');
  Route::put('quiz/{quiz}/publish', 'QuizController@publish');
  Route::get('quiz/{id}/show', 'QuizController@show');

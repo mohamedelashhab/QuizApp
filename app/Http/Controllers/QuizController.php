@@ -14,7 +14,7 @@ class QuizController extends Controller
         $this->middleware('auth:api');
     }
 
-    public function store(Request $request, $id)
+    public function store(Request $request,User $user)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
@@ -26,9 +26,8 @@ class QuizController extends Controller
         }
 
         // return auth()->user();
-        $u = User::find($id)->first();
 
-        $quize = $u->quizzes()->create([
+        $quize = $user->quizzes()->create([
             'name' => $request->input('name'),
             'num' => $request->input('num'),
         ]);
@@ -73,6 +72,14 @@ class QuizController extends Controller
 
     public function list(Request $request)
     {
+        if($request->has('teacher_id') && $request->input('teacher_id') > 0){
+            $quizzes = Quiz::where('teacher_id', '=', $request->input('teacher_id'))->get();
+            return response()->json($quizzes, 200);
+        }
+        if($request->has('teacher_id') && $request->input('teacher_id') == 0){
+            $quizzes = Quiz::where('published', '=', true)->get();
+            return response()->json($quizzes, 200);
+        }
         if($request->has('published')){
             $quizzes = Quiz::where('published', '=', $request->input('published'))->get();
             return response()->json($quizzes, 200);
